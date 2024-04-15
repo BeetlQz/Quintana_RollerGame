@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode a;
     public KeyCode s;
     public KeyCode d;
+    public KeyCode jump;
 
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
@@ -47,10 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetButtonDown("Jump")) 
-        {
-            Jump();
-        }
+       
 
         if(transform.position.y < -15) 
         {
@@ -81,7 +79,13 @@ public class PlayerMovement : MonoBehaviour
 
         //playerRB.AddForce(movement * speed * Time.deltaTime);
         //Time.delatime is time in game, based on frame rate
-
+        
+        if(Input.GetKey(jump) && GetComponent<Rigidbody>().transform.position.y <= 3.0f) 
+        {
+            Vector3 jump = new Vector3(0.0f, 200.0f, 0.0f);
+            GetComponent<Rigidbody>().AddForce(jump);
+        }
+        
          if (Input.GetKey(a))
         {
             playerRB.AddForce(Vector3.left * speed);
@@ -111,13 +115,6 @@ public class PlayerMovement : MonoBehaviour
         } */
     }
 
-    private void Jump()
-    {
-        if(isGrounded() == true)
-        {
-            playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {

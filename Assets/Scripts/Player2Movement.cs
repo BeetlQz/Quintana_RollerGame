@@ -11,6 +11,7 @@ public class Player2Movement : MonoBehaviour
     public KeyCode right;
     public KeyCode up;
     public KeyCode down;
+    public KeyCode jump;
 
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce;
@@ -47,10 +48,6 @@ public class Player2Movement : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetButtonDown("Jump")) 
-        {
-            Jump();
-        }
 
         if(transform.position.y < -15) 
         {
@@ -80,6 +77,12 @@ public class Player2Movement : MonoBehaviour
         //which direction applied
 
         */
+
+        if(Input.GetKey(jump) && GetComponent<Rigidbody>().transform.position.y <= 3.0f) 
+        {
+            Vector3 jump = new Vector3(0.0f, 200.0f, 0.0f);
+            GetComponent<Rigidbody>().AddForce(jump);
+        }
 
          if (Input.GetKey(left))
         {
