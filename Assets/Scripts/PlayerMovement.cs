@@ -20,8 +20,6 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform cam;
 
-    public bool isPoweredUp;
-    public float powerBounceStrength;
     public float powerUpTime = 7f;
 
     public Transform respawnPoint;
@@ -116,24 +114,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        //collider, but doesn't have substance, not physical
-
-        if(other.CompareTag("Powerup"))
-        {
-            isPoweredUp = true;
-            Destroy(other.gameObject);
-           StartCoroutine(powerUpCountDownRoutine());
-        }
-    }
-
-    IEnumerator powerUpCountDownRoutine()
-    {
-        yield return new WaitForSeconds(powerUpTime);
-        isPoweredUp = false;
-    } 
-
     private void OnCollisionEnter(Collision collision)
     {
         
@@ -150,6 +130,11 @@ public class PlayerMovement : MonoBehaviour
     void EndGame() {
         menuController.LoseGame();
         gameObject.SetActive(false);
+    }
+
+    public void SetMoveSpeed( float newSpeedAdjustment)
+    {
+        speed += newSpeedAdjustment;
     }
 
 }
